@@ -1,7 +1,6 @@
 name: multi_wizard
-description: A Widget that can be used as a Wizard. 
-version: 0.0.1
-author: Josef Atoui
+description: A Widget that can be used as a Wizard. A more easily used Stepper for handling form and welcome screens.
+version: 0.0.1+1
 homepage: https://github.com/josat799/flutter-multi-wizard
 
 environment:

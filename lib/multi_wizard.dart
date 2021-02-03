@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
+/// Each Step in the Wizard
 class WizardStep {
+
+  /// Use [key] for testing or to interact with the step.
   Key key;
+
+  /// The content displayed on the step.
   Widget child;
+
+  /// Use [showNext] and [showPrevious] to hide buttons.
+  /// Usable for instance if you want a function to handle it.
   bool showNext, showPrevious;
+
+  /// Use [nextFunction] and [previousFunction] to move back and forward.
   final bool Function() nextFunction, previousFunction;
 
   WizardStep({
@@ -16,14 +26,28 @@ class WizardStep {
   });
 }
 
+/// MultiWizard
+// ignore: must_be_immutable
 class MultiWizard extends StatefulWidget {
+
+  /// Use [key] for testing or to interact with the wizard.
   final Key key;
+
+  /// Give the wizard a decoration.
   final BoxDecoration decoration;
+
+  /// Function activates when the wizard has finished.
   final Function() finishFunction;
+
+  /// The amount of steps cannot be zero.
   final List<WizardStep> steps;
+
   ButtonStyle buttonStyle;
+
   TextStyle buttonTextStyle;
+
   Icon buttonIconForward, buttonIconPrevious, buttonIconFinish;
+
 
   MultiWizard({
     @required this.steps,
@@ -96,6 +120,8 @@ class _MultiWizardState extends State<MultiWizard> {
           return _createTextButton(direction);
         }
         break;
+      default:
+        throw ("Must include a direction from the Enum Direction");
     }
   }
 
