@@ -1,8 +1,8 @@
 name: multi_wizard
 description: A Widget that can be used as a Wizard. 
 version: 0.0.1
-author:
-homepage:
+author: Josef Atoui
+homepage: https://github.com/josat799/flutter-multi-wizard
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
