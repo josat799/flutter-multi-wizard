@@ -14,42 +14,78 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Example extends StatelessWidget {
-  final List<WizardStep> _demoSteps1 = [
-    WizardStep(
-      child: Center(
-        child: Text('Welcome to the app!'),
-      ),
-    ),
-    WizardStep(
-        child: Center(
-      child: Text('This is all!'),
-    )),
-  ];
+class Example extends StatefulWidget {
+  @override
+  _ExampleState createState() => _ExampleState();
+}
 
-  final List<WizardStep> _demoSteps2 = [
-    WizardStep(
-      child: Center(
-        child: Text("Hello"),
-      ),
-    ),
-  ];
+class _ExampleState extends State<Example> {
+  GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final snackBar = SnackBar(
+    content: Text('Welcome!'),
+    duration: Duration(seconds: 5),
+  );
+
+  late String name;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Text('Example 1'),
-            MultiWizard(
-              steps: _demoSteps1,
-            ),
-            Text('Example 2'),
-            MultiWizard(
-              steps: _demoSteps2,
-            ),
-          ],
+        child: SizedBox(
+          width: 500,
+          height: 500,
+          child: MultiWizard(
+            steps: [
+              WizardStep(
+                child: Container(
+                  height: double.infinity,
+                  child: Wrap(
+                    direction: Axis.vertical,
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      ClipRect(
+                        child: Image.network(
+                            "https://i0.wp.com/www.logoworks.com/blog/wp-content/uploads/2014/03/fruit-vegetable-logos-templates-logo-designs-037.png?w=325&ssl=1"),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Welcome to the most amazing app ever!",
+                      ),
+                      Text("Created By josat799"),
+                    ],
+                  ),
+                ),
+              ),
+              WizardStep(
+                child: Center(
+                  child: Form(
+                    key: _key,
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.always,
+                      decoration: InputDecoration(hintText: 'Your name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'You must have a name!';
+                        } else if (value.length < 2) {
+                          return 'Your name must be atleast 2 charachters long!';
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            finishFunction: () {
+              print(_key.currentState!.validate());
+              if (_key.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+          ),
         ),
       ),
     );
