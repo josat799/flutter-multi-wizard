@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 
 /// Each Step in the Wizard
 class WizardStep {
-
   /// Use [key] for testing or to interact with the step.
-  Key key;
+  Key? key;
 
   /// The content displayed on the step.
   Widget child;
 
   /// Use [showNext] and [showPrevious] to hide buttons.
   /// Usable for instance if you want a function to handle it.
-  bool showNext, showPrevious;
+  bool? showNext, showPrevious;
 
   /// Use [nextFunction] and [previousFunction] to move back and forward.
-  final bool Function() nextFunction, previousFunction;
+  Function()? nextFunction, previousFunction;
 
   WizardStep({
     this.nextFunction,
     this.previousFunction,
-    this.child,
+    required this.child,
     this.key,
     this.showPrevious = true,
     this.showNext = true,
@@ -29,48 +28,45 @@ class WizardStep {
 /// MultiWizard
 // ignore: must_be_immutable
 class MultiWizard extends StatefulWidget {
-
   /// Use [key] for testing or to interact with the wizard.
-  final Key key;
+  final Key? key;
 
   /// Give the wizard a decoration.
   final BoxDecoration decoration;
 
   /// Function activates when the wizard has finished.
-  final Function() finishFunction;
+  final Function()? finishFunction;
 
   /// The amount of steps cannot be zero.
   final List<WizardStep> steps;
 
-  ButtonStyle buttonStyle;
+  ButtonStyle? buttonStyle;
 
-  TextStyle buttonTextStyle;
+  TextStyle? buttonTextStyle;
 
-  Icon buttonIconForward, buttonIconPrevious, buttonIconFinish;
-
+  Icon? buttonIconForward, buttonIconPrevious, buttonIconFinish;
 
   MultiWizard({
-    @required this.steps,
+    required this.steps,
     this.key,
     this.finishFunction,
     this.decoration = const BoxDecoration(),
     this.buttonStyle,
     this.buttonTextStyle,
   }) {
-    assert(steps != null);
+    assert(steps.isNotEmpty);
   }
 
   MultiWizard.icon({
     this.key,
     this.decoration = const BoxDecoration(),
     this.finishFunction,
-    this.steps,
+    required this.steps,
     this.buttonIconForward = const Icon(Icons.arrow_forward),
     this.buttonIconPrevious = const Icon(Icons.arrow_back),
     this.buttonIconFinish = const Icon(Icons.check),
-
   }) {
-    assert(steps != null);
+    assert(steps.isNotEmpty);
   }
 
   @override
@@ -101,25 +97,22 @@ class _MultiWizardState extends State<MultiWizard> {
     switch (direction) {
       case Direction.forward:
         if (widget.buttonIconForward != null) {
-          return _createIconButton(direction, widget.buttonIconForward);
+          return _createIconButton(direction, widget.buttonIconForward!);
         } else {
           return _createTextButton(direction);
         }
-        break;
       case Direction.previous:
         if (widget.buttonIconPrevious != null) {
-          return _createIconButton(direction, widget.buttonIconPrevious);
+          return _createIconButton(direction, widget.buttonIconPrevious!);
         } else {
           return _createTextButton(direction);
         }
-        break;
       case Direction.finish:
         if (widget.buttonIconFinish != null) {
-          return _createIconButton(direction, widget.buttonIconFinish);
+          return _createIconButton(direction, widget.buttonIconFinish!);
         } else {
           return _createTextButton(direction);
         }
-        break;
       default:
         throw ("Must include a direction from the Enum Direction");
     }
@@ -130,7 +123,7 @@ class _MultiWizardState extends State<MultiWizard> {
       switch (direction) {
         case Direction.forward:
           if (widget.steps[currentStep].nextFunction != null) {
-            if (widget.steps[currentStep].nextFunction()) {
+            if (widget.steps[currentStep].nextFunction!()) {
               currentStep++;
             }
           } else {
@@ -139,7 +132,7 @@ class _MultiWizardState extends State<MultiWizard> {
           break;
         case Direction.previous:
           if (widget.steps[currentStep].previousFunction != null) {
-            if (widget.steps[currentStep].previousFunction()) {
+            if (widget.steps[currentStep].previousFunction!()) {
               currentStep--;
             }
           } else {
@@ -148,9 +141,7 @@ class _MultiWizardState extends State<MultiWizard> {
           break;
         case Direction.finish:
           if (widget.finishFunction != null) {
-            widget.finishFunction();
-          } else {
-            Navigator.pop(context);
+            widget.finishFunction!();
           }
           break;
       }
@@ -183,7 +174,7 @@ class _MultiWizardState extends State<MultiWizard> {
             padding: EdgeInsets.only(left: 8),
             child: Align(
               alignment: Alignment.bottomLeft,
-              child: widget.steps[currentStep].showPrevious
+              child: widget.steps[currentStep].showPrevious!
                   ? _createButton(Direction.previous)
                   : Container(),
             ),
@@ -194,7 +185,7 @@ class _MultiWizardState extends State<MultiWizard> {
               alignment: Alignment.bottomRight,
               child: currentStep == widget.steps.length - 1
                   ? _createButton(Direction.finish)
-                  : widget.steps[currentStep].showNext
+                  : widget.steps[currentStep].showNext!
                       ? _createButton(Direction.forward)
                       : Container(),
             ),
