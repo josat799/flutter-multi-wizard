@@ -21,15 +21,11 @@ class Example extends StatefulWidget {
 
 class _ExampleState extends State<Example> {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
-  final snackBar = SnackBar(
-    content: Text('Welcome!'),
-    duration: Duration(seconds: 5),
-  );
-
-  late String name;
 
   @override
   Widget build(BuildContext context) {
+    String name = "";
+
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -38,6 +34,8 @@ class _ExampleState extends State<Example> {
           child: MultiWizard(
             steps: [
               WizardStep(
+                showPrevious: false, // Removes the previous button
+                nextFunction: () => print('You pressed the next button'),
                 child: Container(
                   height: double.infinity,
                   child: Wrap(
@@ -74,15 +72,21 @@ class _ExampleState extends State<Example> {
                           return 'Your name must be atleast 2 charachters long!';
                         }
                       },
+                      onSaved: (value) {
+                        name = value!;
+                      },
                     ),
                   ),
                 ),
               ),
             ],
             finishFunction: () {
-              print(_key.currentState!.validate());
               if (_key.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                _key.currentState!.save();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Welcome $name!'),
+                  duration: Duration(seconds: 5),
+                ));
               }
             },
           ),

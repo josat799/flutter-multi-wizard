@@ -123,21 +123,17 @@ class _MultiWizardState extends State<MultiWizard> {
       switch (direction) {
         case Direction.forward:
           if (widget.steps[currentStep].nextFunction != null) {
-            if (widget.steps[currentStep].nextFunction!()) {
-              currentStep++;
-            }
-          } else {
-            currentStep++;
+            widget.steps[currentStep].nextFunction!();
           }
+          currentStep++;
+
           break;
         case Direction.previous:
           if (widget.steps[currentStep].previousFunction != null) {
-            if (widget.steps[currentStep].previousFunction!()) {
-              currentStep--;
-            }
-          } else {
-            currentStep--;
+            widget.steps[currentStep].previousFunction!();
           }
+          currentStep--;
+
           break;
         case Direction.finish:
           if (widget.finishFunction != null) {
