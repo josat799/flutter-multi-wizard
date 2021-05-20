@@ -1,0 +1,31 @@
+name: multi_wizard_example
+description: Demonstrates how to use the multi_wizard plugin.
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  multi_wizard:
+    path: ../
+
+# Uncomment when testing platform interface changes.
+# dependency_overrides:
+#   multi_wizard_platform_interface:
+#     path: ../../multi_wizard_platform_interface
+#   multi_wizard_web:
+#     path: ../../multi_wizard_web
+
+dev_dependencies:
+  # TODO: uncomment these dependencies when they have nullsafe versions.
+  # flutter_driver:
+  #   sdk: flutter
+  flutter_test:
+    sdk: flutter
+  # integration_test: ^1.0.1
+  test: ^1.16.4
+
+flutter:
+  uses-material-design: true
