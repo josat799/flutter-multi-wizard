@@ -1,3 +1,7 @@
-# multi_wizard
+# Multi Wizard Plugin
 
-A Widget that can be used as a Wizard.
+Allows for a more flexible stepper which can be configured for multiple purposes.
+
+## Example
+
+![Example how the plugin can be used](example.gif)
